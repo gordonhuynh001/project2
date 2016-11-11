@@ -10,8 +10,8 @@
 // If the landing square is a ladder, set the position to the corresponding higher square
 // Player climbs up to the higher square
 // Otherwise, player stays put at the landing square
-// TO DO: implement this method
 void GameBoard::buildBoard() {
-   // TODO: implement this function properly
-   throw std::logic_error("not implemented yet");
+	for (int i = 0; i < 100; i++) {     //uses a for loop to create 100 spots
+		board.insert(i, i + 1);
+	}
 }
