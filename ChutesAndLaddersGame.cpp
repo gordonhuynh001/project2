@@ -11,30 +11,42 @@
 
 using namespace std;
 
-// TODO: implement the constructor with all your team members
 // constructor with the default value of a minimum players
-ChutesAndLaddersGame::ChutesAndLaddersGame(int nPlayers) : winner("no winner") {
-   // TODO: implement this function properly
-   throw std::logic_error("not implemented yet");
+ChutesAndLaddersGame::ChutesAndLaddersGame(int nPlayers) : winner("no winner"), nPlayers(nPlayers) {
+	Player Gordon;
+	Player Huynh;
+	Gordon.setName("Gordon");
+	Huynh.setName("Huynh");
+	store.enqueue(Gordon);
+	store.enqueue(Huynh);
 }
 
-// TODO: implement the destructor
+
 // destructor - dequeue players from the queue
 ChutesAndLaddersGame::~ChutesAndLaddersGame() {
-   // TODO: implement this function properly
-   throw std::logic_error("not implemented yet");
+	// TODO: implement this function properly
+	if (!store.empty()) {      //dequeues players if array queue is not empty
+		store.dequeue();
+	}
 }
 
-// TO DO: implement this function properly
 // reset the game - rebuild the list of players
 //        (i.e., the list should be the same as in the constructor).
 //        Place all players at the figurative square zero
 void ChutesAndLaddersGame::resetGame() {
-   // TODO: implement this function properly
-   throw std::logic_error("not implemented yet");
+	winner = "no winner";
+	while (!store.empty()) {
+		store.dequeue();
+	};
+
+	Player player1, player2;
+	player1 = Player("Gordon");
+	player2 = Player("Huynh");
+
+	store.enqueue(player1);
+	store.enqueue(player2);
 }
 
-// TO DO: implement this function properly
 // Play the chutes and ladders until a player reaches the winning square 100
 //    - Each player takes turn to roll the die and moves to the new square by invoking rollDieAndMove.
 //         If the new square is outside of the board, the player stays put
@@ -45,7 +57,19 @@ void ChutesAndLaddersGame::resetGame() {
 //    - If player lands on the winning square 100, game is over
 //    - playGame returns after congratulating and printing the winner's name
 void ChutesAndLaddersGame::playGame() {
-   // TODO: implement this function properly
-   throw std::logic_error("not implemented yet");
-   
+	while (winner == "no winner") {
+		Player temp = store.front();
+		temp.setPostion(temp.rollDieAndMove());
+			temp.setPostion(gameBoard.checkChutesLadders(temp.getPostion()));
+
+		if (temp.getPostion() == 100) {              //checks winner
+			winner = temp.getName();
+			cout << winner << " is the winner.";
+		}
+
+		else if (temp.getPostion() != 100) {         //dequeues player, next player goes
+			store.dequeue();
+			store.enqueue(temp);
+		}
+	}
 }
